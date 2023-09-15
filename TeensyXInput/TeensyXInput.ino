@@ -28,11 +28,34 @@ void loop() {
   // Parse frame data.
   memset(FRAME, 0, sizeof(ControllerWork));
   Wire.readBytes((unsigned char *)FRAME, sizeof(ControllerWork));
+
+  // ABXY
   XInput.setButton(BUTTON_A, FRAME->BUTTONS & WRK_BUTTON_A);
   XInput.setButton(BUTTON_B, FRAME->BUTTONS & WRK_BUTTON_B);
   XInput.setButton(BUTTON_X, FRAME->BUTTONS & WRK_BUTTON_X);
   XInput.setButton(BUTTON_Y, FRAME->BUTTONS & WRK_BUTTON_Y);
+
+  // L1 & R1
+  XInput.setButton(BUTTON_LB, FRAME->BUTTONS & WRK_BUTTON_SHOULDER_L);
+  XInput.setButton(BUTTON_RB, FRAME->BUTTONS & WRK_BUTTON_SHOULDER_R);
+
+  // L2 & R2
+  XInput.setButton(TRIGGER_LEFT, FRAME->BUTTONS & WRK_BUTTON_TRIGGER_L);
+  XInput.setButton(TRIGGER_RIGHT, FRAME->BUTTONS & WRK_BUTTON_TRIGGER_R);
+  
+  // L3 & R3
+  XInput.setButton(BUTTON_L3, FRAME->BUTTONS & WRK_BUTTON_THUMB_L);
+  XInput.setButton(BUTTON_R3, FRAME->BUTTONS & WRK_BUTTON_THUMB_R);
+
+  // Misc buttons.
+  XInput.setButton(BUTTON_BACK, FRAME->MISC & WRK_MISC_BUTTON_BACK);
+  XInput.setButton(BUTTON_LOGO, FRAME->MISC & WRK_MISC_BUTTON_SYSTEM);
+  XInput.setButton(BUTTON_START, FRAME->MISC & WRK_MISC_BUTTON_HOME);
+
+  // DPad
   XInput.setDpad(FRAME->DPAD & WRK_DPAD_UP, FRAME->DPAD & WRK_DPAD_DOWN, FRAME->DPAD & WRK_DPAD_LEFT, FRAME->DPAD & WRK_DPAD_RIGHT);
+
+  // Joystick
   XInput.setJoystickRange(-508, 512);
   XInput.setJoystickX(JOY_LEFT, FRAME->L_X);
   XInput.setJoystickY(JOY_LEFT, -FRAME->L_Y);
